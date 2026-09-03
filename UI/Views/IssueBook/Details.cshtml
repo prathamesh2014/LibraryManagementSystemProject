@@ -1,0 +1,47 @@
+﻿@model Domain.Entities.IssueBook
+@{
+    ViewData["Title"] = "Issue Details";
+    Layout = "_Layout";
+}
+
+<h3>Issue Details</h3>
+
+<div class="card" style="max-width: 600px;">
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-4">Book</dt>
+            <dd class="col-sm-8">@Model.Book.Title</dd>
+
+            <dt class="col-sm-4">Member</dt>
+            <dd class="col-sm-8">@Model.Member.FullName</dd>
+
+            <dt class="col-sm-4">Issue Date</dt>
+            <dd class="col-sm-8">@Model.IssueDate.ToString("dd-MMM-yyyy")</dd>
+
+            <dt class="col-sm-4">Due Date</dt>
+            <dd class="col-sm-8">@Model.DueDate.ToString("dd-MMM-yyyy")</dd>
+
+            <dt class="col-sm-4">Return Date</dt>
+            <dd class="col-sm-8">
+                @(Model.ReturnDate.HasValue ? Model.ReturnDate.Value.ToString("dd-MMM-yyyy") : "Not returned yet")
+            </dd>
+
+            <dt class="col-sm-4">Fine Amount</dt>
+            <dd class="col-sm-8">₹@Model.FineAmount</dd>
+
+            <dt class="col-sm-4">Status</dt>
+            <dd class="col-sm-8">
+                @if (Model.Status == "Issued")
+                {
+                    <span class="badge bg-warning text-dark">Issued</span>
+                }
+                else
+                {
+                    <span class="badge bg-success">Returned</span>
+                }
+            </dd>
+        </dl>
+    </div>
+</div>
+
+<a asp-action="Index" class="btn btn-secondary mt-3">Back to List</a>

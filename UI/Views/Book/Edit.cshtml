@@ -1,0 +1,92 @@
+﻿@model UI.Models.BookViewModel
+@{
+    ViewData["Title"] = "Edit Book";
+    Layout = "_Layout";
+}
+
+<h3>Edit Book</h3>
+
+<form asp-action="Edit" method="post" enctype="multipart/form-data">
+    <input type="hidden" asp-for="BookId" />
+    <input type="hidden" asp-for="AvailableCopies" />
+    <input type="hidden" asp-for="IsDeleted" />
+    <input type="hidden" asp-for="ImagePath" />
+
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label asp-for="Title" class="form-label"></label>
+            <input asp-for="Title" class="form-control" />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label asp-for="ISBN" class="form-label"></label>
+            <input asp-for="ISBN" class="form-control" />
+            <span asp-validation-for="ISBN" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label asp-for="Publisher" class="form-label"></label>
+            <input asp-for="Publisher" class="form-control" />
+            <span asp-validation-for="Publisher" class="text-danger"></span>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label asp-for="PublishYear" class="form-label"></label>
+            <input asp-for="PublishYear" class="form-control" />
+            <span asp-validation-for="PublishYear" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label asp-for="CategoryId" class="form-label">Category</label>
+            <select asp-for="CategoryId" class="form-select">
+                <option value="">-- Select Category --</option>
+                @foreach (var category in Model.Categories)
+                {
+                    <option value="@category.CategoryId" selected="@(category.CategoryId == Model.CategoryId)">
+                        @category.CategoryName
+                    </option>
+                }
+            </select>
+            <span asp-validation-for="CategoryId" class="text-danger"></span>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label asp-for="AuthorId" class="form-label">Author</label>
+            <select asp-for="AuthorId" class="form-select">
+                <option value="">-- Select Author --</option>
+                @foreach (var author in Model.Authors)
+                {
+                    <option value="@author.AuthorId" selected="@(author.AuthorId == Model.AuthorId)">
+                        @author.AuthorName
+                    </option>
+                }
+            </select>
+            <span asp-validation-for="AuthorId" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label asp-for="TotalCopies" class="form-label"></label>
+            <input asp-for="TotalCopies" class="form-control" />
+            <span asp-validation-for="TotalCopies" class="text-danger"></span>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label asp-for="ImageFile" class="form-label">Replace Cover Image (optional)</label>
+            <input asp-for="ImageFile" type="file" class="form-control" accept="image/*" />
+            @if (!string.IsNullOrEmpty(Model.ImagePath))
+            {
+                <img src="@Model.ImagePath" style="width: 60px; margin-top: 8px;" />
+            }
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Update</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

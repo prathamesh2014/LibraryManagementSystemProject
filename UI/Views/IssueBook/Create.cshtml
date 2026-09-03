@@ -1,0 +1,40 @@
+﻿@model UI.Models.IssueBookViewModel
+@{
+    ViewData["Title"] = "Issue Book";
+    Layout = "_Layout";
+}
+
+<h3>Issue Book</h3>
+
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+<form asp-action="Create" method="post">
+    <div class="mb-3">
+        <label class="form-label">Select Book</label>
+        <select asp-for="BookId" class="form-select">
+            <option value="">-- Select Book --</option>
+            @foreach (var book in Model.Books)
+            {
+                <option value="@book.BookId">@book.Title (Available: @book.AvailableCopies)</option>
+            }
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Select Member</label>
+        <select asp-for="MemberId" class="form-select">
+            <option value="">-- Select Member --</option>
+            @foreach (var member in Model.Members)
+            {
+                <option value="@member.MemberId">@member.FullName (@member.Email)</option>
+            }
+        </select>
+    </div>
+
+    <div class="alert alert-info">
+        Books are issued for <strong>14 days</strong>. A fine of <strong>₹10/day</strong> applies for late returns.
+    </div>
+
+    <button type="submit" class="btn btn-primary">Issue Book</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>

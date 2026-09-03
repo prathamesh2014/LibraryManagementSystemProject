@@ -1,0 +1,27 @@
+﻿@model Domain.Entities.Author
+@{
+    ViewData["Title"] = "Edit Author";
+    Layout = "_Layout";
+}
+
+<h3>Edit Author</h3>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="AuthorId" />
+    <div class="mb-3">
+        <label asp-for="AuthorName" class="form-label"></label>
+        <input asp-for="AuthorName" class="form-control" />
+        <span asp-validation-for="AuthorName" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Biography" class="form-label"></label>
+        <textarea asp-for="Biography" class="form-control" rows="4"></textarea>
+        <span asp-validation-for="Biography" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Update</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

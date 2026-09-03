@@ -1,0 +1,47 @@
+﻿@model Domain.Entities.IssueBook
+@{
+    ViewData["Title"] = "Return Book";
+    Layout = "_Layout";
+}
+
+<h3>Return Book</h3>
+
+<div class="card" style="max-width: 500px;">
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-4">Book</dt>
+            <dd class="col-sm-8">@Model.Book.Title</dd>
+
+            <dt class="col-sm-4">Member</dt>
+            <dd class="col-sm-8">@Model.Member.FullName</dd>
+
+            <dt class="col-sm-4">Issue Date</dt>
+            <dd class="col-sm-8">@Model.IssueDate.ToString("dd-MMM-yyyy")</dd>
+
+            <dt class="col-sm-4">Due Date</dt>
+            <dd class="col-sm-8">@Model.DueDate.ToString("dd-MMM-yyyy")</dd>
+        </dl>
+
+        @if (DateTime.Now > Model.DueDate)
+        {
+            var lateDays = (DateTime.Now - Model.DueDate).Days;
+            <div class="alert alert-danger">
+                This book is <strong>@lateDays day(s)</strong> overdue.
+                Estimated fine: <strong>₹@(lateDays * 10)</strong>
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-success">
+                This book is being returned on time. No fine applies.
+            </div>
+        }
+
+        <form asp-action="Return" method="post">
+            <input type="hidden" name="issueId" value="@Model.IssueId" />
+            <input type="hidden" name="confirm" value="true" />
+            <button type="submit" class="btn btn-success">Confirm Return</button>
+            <a asp-controller="IssueBook" asp-action="Index" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</div>

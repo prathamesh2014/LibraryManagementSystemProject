@@ -1,0 +1,21 @@
+﻿@model Domain.Entities.Category
+@{
+    ViewData["Title"] = "Category Details";
+    Layout = "_Layout";
+}
+
+<h3>Category Details</h3>
+
+<div class="card" style="max-width: 500px;">
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-4">Category Name</dt>
+            <dd class="col-sm-8">@Model.CategoryName</dd>
+
+            <dt class="col-sm-4">Description</dt>
+            <dd class="col-sm-8">@Model.Description</dd>
+        </dl>
+    </div>
+</div>
+
+<a asp-action="Index" class="btn btn-secondary mt-3">Back to List</a>

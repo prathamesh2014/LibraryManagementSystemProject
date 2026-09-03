@@ -1,0 +1,92 @@
+﻿@model UI.Models.DashboardViewModel
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "_Layout";
+}
+
+<h3 class="mb-4">Admin Dashboard</h3>
+
+<div class="row g-3 mb-4">
+    <div class="col-md-3">
+        <div class="card text-white bg-primary">
+            <div class="card-body">
+                <h6 class="card-title">Total Books</h6>
+                <h2>@Model.TotalBooks</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-success">
+            <div class="card-body">
+                <h6 class="card-title">Total Members</h6>
+                <h2>@Model.TotalMembers</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-warning">
+            <div class="card-body">
+                <h6 class="card-title">Pending Books</h6>
+                <h2>@Model.PendingBooksCount</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-info">
+            <div class="card-body">
+                <h6 class="card-title">Returned Books</h6>
+                <h2>@Model.ReturnedBooksCount</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h6 class="card-title">Total Issued (All Time)</h6>
+                <h2>@Model.IssuedBooksCount</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h5>Recently Issued Books</h5>
+<table class="table table-bordered table-hover">
+    <thead class="table-light">
+        <tr>
+            <th>Book</th>
+            <th>Member</th>
+            <th>Issue Date</th>
+            <th>Due Date</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var issue in Model.RecentIssues)
+        {
+            <tr>
+                <td>@issue.Book.Title</td>
+                <td>@issue.Member.FullName</td>
+                <td>@issue.IssueDate.ToString("dd-MMM-yyyy")</td>
+                <td>@issue.DueDate.ToString("dd-MMM-yyyy")</td>
+                <td>
+                    @if (issue.Status == "Issued")
+                    {
+                        <span class="badge bg-warning text-dark">Issued</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-success">Returned</span>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@if (!Model.RecentIssues.Any())
+{
+    <p class="text-muted">No issue records yet.</p>
+}
